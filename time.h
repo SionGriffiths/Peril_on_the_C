@@ -8,14 +8,14 @@
 #ifndef TIME_H
 #define	TIME_H
 
-typedef struct timestr {
+typedef struct timestr{
   int year;
   int month;
   int day;
   int hours;
   int minutes;
   int seconds;
-} time;
+}time;
 
 typedef time * time_ptr;
 

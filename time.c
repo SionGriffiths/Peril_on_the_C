@@ -11,9 +11,9 @@ time_ptr read_time(FILE * file_in) {
   
   int read_status;
 
-  timestr* new_time;
+  time* new_time;
 
-  new_time = calloc(1, sizeof (timestr));
+  new_time = calloc(1, sizeof (time));
 
   read_status = fscanf(file_in, "%d%d%d%d%d%d",
           &new_time -> day,
