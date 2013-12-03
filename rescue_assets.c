@@ -3,7 +3,7 @@
 #include "rescue_assets.h"
 #include "navigation.h"
 
-r_asset_ptr asset_head = NULL;
+static r_asset_ptr asset_head = NULL;
 
 r_asset_ptr read_asset(FILE * resources_file) {
 
@@ -28,7 +28,10 @@ r_asset_ptr read_asset(FILE * resources_file) {
 
   if (read_status == EOF) {
     return NULL;
-  } else {
+  } else if(read_status != 8){
+    printf("Rescue asset data looks incorrect or corrupt \n");
+    return NULL;
+  }else {
     return in_asset;
   }
 }
@@ -46,11 +49,18 @@ void make_asset_list(char * resource_file_name) {
 
     head = read_asset(resource_file);
     add_asset(head);
+    int count = 1;
+    while ((asset_in = read_asset(resource_file)) != NULL) {
+      add_asset(asset_in);
+      count++;
+    }
+    printf("Read in %d assets OK \n", count);
+
+  } else {
+    printf("Could not find file \n");
   }
 
-  while ((asset_in = read_asset(resource_file)) != NULL) {
-    add_asset(asset_in);
-  }
+
 }
 
 void add_asset(r_asset_ptr to_add) {
@@ -60,8 +70,7 @@ void add_asset(r_asset_ptr to_add) {
   if (asset_head == NULL) {
     asset_head = to_add;
 
-  }
-  else if (asset_head -> next == NULL) {
+  } else if (asset_head -> next == NULL) {
     asset_head -> next = to_add;
 
   } else {
