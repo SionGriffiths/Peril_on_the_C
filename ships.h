@@ -12,12 +12,20 @@
 typedef struct shipstr{
   char ais_id[30];
   location loc;
-  float heading;
-  float speed;
+  double heading;
+  double speed;
   struct shipstr * next;
 }ship;
 
 typedef ship * ship_ptr;
+
+ship_ptr read_ship(FILE* ships_file);
+
+void make_ship_list(char * ship_file_name);
+
+void add_ship(ship_ptr to_add);
+
+ship_ptr get_ship_head();
 
 #endif	/* SHIPS_H */
 
