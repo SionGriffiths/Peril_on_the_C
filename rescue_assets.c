@@ -16,7 +16,7 @@ r_asset_ptr read_asset(FILE * resources_file) {
 
   //name, type, base, lat, long, speed, range, turn around time
   //%1s used for kind because C is a fucking wanker.
-  read_status = fscanf(resources_file, "%s%1s%s%f%f%f%d%d",
+  read_status = fscanf(resources_file, "%s%1s%s%lf%lf%f%d%d",
           in_asset -> callsign,
           in_asset -> kind,
           in_asset -> base,

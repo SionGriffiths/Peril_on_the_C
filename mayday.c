@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "mayday.h"
+#include "mytime.h"
+#include <time.h>
 
 mayday_ptr read_mayday(char * mayday_file_name) {
 
@@ -39,13 +41,31 @@ mayday_ptr read_mayday(char * mayday_file_name) {
       printf("Mayday file looks incorrect or corrupt \n");
     }
     else{
-      printf("Mayday read OK");
+      printf("Mayday read OK \n");
       return mayday_in;
     }
 
   }
 
   return NULL;
+}
+
+time_ptr get_mayday_time(mayday_ptr mayday_in){
+  
+  time_ptr mayday_time = NULL;
+  mayday_time = calloc(1, sizeof(timestr));
+  
+  mayday_time->tm_mday = mayday_in->day;
+  mayday_time->tm_mon = (mayday_in->month)-1;
+  mayday_time->tm_year = (mayday_in->year)-1900;
+  //hour
+  mayday_time->tm_hour = mayday_in->hours;
+  //min
+  mayday_time->tm_min = mayday_in->minutes;
+  //sec
+  mayday_time->tm_sec = mayday_in->seconds;
+  
+  return mayday_time;
 }
 
 

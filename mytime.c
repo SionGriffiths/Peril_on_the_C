@@ -14,7 +14,7 @@ time_ptr read_time(FILE * file_in) {
 
   timestr* new_time;
 
-  new_time = calloc(1, sizeof (time));
+  new_time = calloc(1, sizeof (timestr));
 
   //temp varibales here for conversion from file date format to date accepted by time.h
   int temp_month = 0;
@@ -52,7 +52,7 @@ void set_current_time(time_ptr in_time) {
 double time_diff(time_ptr old, time_ptr new) {
   time_t a = mktime(old);
   time_t b = mktime(new); 
-  return difftime(a, b);
+  return (difftime(a, b))/60;
 }
 
 void show_time(time_ptr time_to_show) {

@@ -10,6 +10,9 @@
 #include "rescue_assets.h"
 #include "ships.h"
 #include "mytime.h"
+#include "mayday.h"
+#include <time.h>
+#include "update_positions.h"
 
 /*
  * 
@@ -33,10 +36,23 @@ int main(int argc, char** argv) {
   printf("Please enter the name of a mayday file : ");
   char mayday_filename[30];
   scanf("%s", mayday_filename);
-  read_mayday(mayday_filename);
+  mayday_ptr mayday1 = read_mayday(mayday_filename);
+  time_ptr mayday1_time = get_mayday_time(mayday1);
 
+  show_time(mayday1_time);
 
+  double timediff;
+  timediff = time_diff(mayday1_time, start_time);
 
+  printf("difference is %f minutes \n", timediff);
+
+  ship_ptr to_rescue = find_ship_by_id(mayday1->ais_id);
+  
+  printf("to_rescue coord :\n %f \n %f \n", to_rescue->loc.lat, to_rescue->loc.lng);
+  update_ship(to_rescue, timediff);
+  printf("to_rescue coord :\n %f \n %f \n", to_rescue->loc.lat, to_rescue->loc.lng);
+  
+  
 
 
   return (EXIT_SUCCESS);

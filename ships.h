@@ -27,5 +27,7 @@ void add_ship(ship_ptr to_add);
 
 ship_ptr get_ship_head();
 
+ship_ptr find_ship_by_id(char * id );
+
 #endif	/* SHIPS_H */
 

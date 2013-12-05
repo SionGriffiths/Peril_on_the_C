@@ -3,6 +3,7 @@
 #include "ships.h"
 #include "navigation.h"
 #include "mytime.h"
+#include <string.h>
 
 
 static ship_ptr ship_head = NULL;
@@ -14,8 +15,8 @@ ship_ptr read_ship(FILE* ships_file) {
 
   in_ship = calloc(1, sizeof (ship));
 
-
-  read_status = fscanf(ships_file, "%s%f%f%f%f",
+  
+  read_status = fscanf(ships_file, "%s%lf%lf%lf%lf",
           in_ship->ais_id,
           &in_ship->loc.lat,
           &in_ship->loc.lng,
@@ -65,6 +66,8 @@ void make_ship_list(char * ship_file_name) {
 void add_ship(ship_ptr to_add) {
 
   ship_ptr iterate = ship_head;
+  
+  printf("loc : %f\t %f \n", to_add->loc.lat, to_add->loc.lng);
 
   if (ship_head == NULL) {
     ship_head = to_add;
@@ -86,4 +89,19 @@ void add_ship(ship_ptr to_add) {
 
 ship_ptr get_ship_head() {
   return ship_head;
+}
+
+ship_ptr find_ship_by_id(char * id ){
+  
+  ship_ptr itar = get_ship_head();
+  
+  while(itar != NULL){
+    if(strcmp(itar->ais_id,id) == 0){
+      return itar;
+    }
+    itar = itar -> next;
+  }
+  
+  printf("no ship found \n");
+  return NULL;
 }
