@@ -56,11 +56,12 @@ void make_ship_list(char * ship_file_name) {
       count++;
     }
     printf("Read in %d ships OK \n", count);
+    fclose(ships_file);
 
   } else {
     printf("Could not read file \n");
   }
-
+  
 }
 
 void add_ship(ship_ptr to_add) {

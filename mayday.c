@@ -35,6 +35,7 @@ mayday_ptr read_mayday(char * mayday_file_name) {
             &mayday_in->heli_minutes);
     
     if(read_status == EOF){
+      fclose(mayday_file);
       return NULL;
     }
     else if(read_status != 9){
@@ -46,7 +47,7 @@ mayday_ptr read_mayday(char * mayday_file_name) {
     }
 
   }
-
+  fclose(mayday_file);
   return NULL;
 }
 

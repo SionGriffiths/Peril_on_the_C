@@ -55,12 +55,13 @@ void make_asset_list(char * resource_file_name) {
       count++;
     }
     printf("Read in %d assets OK \n", count);
+    fclose(resource_file);
 
   } else {
     printf("Could not find file \n");
   }
-
-
+ 
+  
 }
 
 void add_asset(r_asset_ptr to_add) {
