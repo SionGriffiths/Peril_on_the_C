@@ -47,27 +47,15 @@ int main(int argc, char** argv) {
   printf("difference is %f minutes \n", timediff);
 
   ship_ptr to_rescue = find_ship_by_id(mayday1->ais_id);
-  
+
   printf("to_rescue coord :\n %f \n %f \n", to_rescue->loc.lat, to_rescue->loc.lng);
   update_ship(to_rescue, timediff);
   printf("to_rescue coord :\n %f \n %f \n", to_rescue->loc.lat, to_rescue->loc.lng);
-  
-  
+  check_position(to_rescue);
+
+
 
 
   return (EXIT_SUCCESS);
 }
 
-/*
- printf("Please enter the name of a ships file : ");
-  char ships_filename2[30];
-  scanf("%s", ships_filename2);  
-  make_ship_list(ships_filename2);
-  
-  time_ptr new_time = get_current_time();
-  
-  show_time(start_time);
-  show_time(new_time);
-  
-  printf("%.f", time_diff(new_time, start_time));
- */

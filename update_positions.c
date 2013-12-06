@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "ships.h"
+#include <stdbool.h>
 
 double deg_to_rad(double angle_in) {
   return (angle_in * M_PI) / 180;
@@ -31,19 +32,33 @@ double update_long(ship_ptr ship_in, double minutes) {
   double speed = ship_in ->speed;
   double course = deg_to_rad(ship_in->heading);
   double lat_rad = deg_to_rad(ship_in->loc.lat);
-  
+
   double new_long = old_long + (speed * sin(course) * minutes / cos(lat_rad)) / 3600;
 
 
   return new_long;
 }
 
-ship_ptr update_ship(ship_ptr ship_in, double minutes){
+ship_ptr update_ship(ship_ptr ship_in, double minutes) {
   double temp_lat = update_lat(ship_in, minutes);
   double temp_long = update_long(ship_in, minutes);
-  
+
   ship_in ->loc.lat = temp_lat;
   ship_in ->loc.lng = temp_long;
-  
+
   return ship_in;
+}
+
+bool check_position(ship_ptr to_check) {
+  bool in_range = true;
+  if ((to_check->loc.lat < 51.667) || (to_check->loc.lat > 52.883)) {
+    in_range = false;
+    printf("Ship latitude out of range \n");
+  } else if ((to_check->loc.lng < -6.667) || (to_check->loc.lng > -3.833)) {
+    in_range = false;
+    printf("Ship longitude out of range \n");
+  } else {
+    printf("Ship position ok \n");
+  }
+  return in_range;
 }
