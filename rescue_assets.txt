@@ -1,6 +1,4 @@
-
-<!-- saved from url=(0117)https://blackboard.aber.ac.uk/bbcswebdav/pid-342573-dt-content-rid-574095_1/courses/CS23710_2013-14/rescue_assets.txt -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></head><body style=""><pre style="word-wrap: break-word; white-space: pre-wrap;">Angle_Lifeboat L Angle 51.685 -5.102 25.0 600 120
+Angle_Lifeboat L Angle 51.685 -5.102 25.0 600 120
 Angle_ILB L Angle 51.685 -5.102 25.0 180 30
 Broad_Haven_ILB L Broad_Haven 51.713 -5.113 25.0 180 30
 St._David's_Lifeboat L St._David's 51.870 -5.305 17.6 818 120
@@ -37,4 +35,4 @@ Rescue_118 H Sligo_airport 54.280 -8.599 120.0 225 60
 Rescue_116 H Dublin_airport 53.421 -6.270 120.0 225 60
 Rescue_122 H Valley_airport 53.248 -4.535 112.0 300 60
 Rescue_169 H Chivenor_airport 51.087 -4.150 112.0 300 60
-</pre></body></html>
+
