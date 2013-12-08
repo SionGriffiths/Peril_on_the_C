@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "rescue_assets.h"
-#include "navigation.h"
+//#include "navigation.h"
+//#include <stdbool.h>
 #include "log_file_handler.h"
+#include <string.h>
 
 static r_asset_ptr asset_head = NULL;
 
@@ -92,4 +94,8 @@ void add_asset(r_asset_ptr to_add) {
 
 r_asset_ptr get_r_asset_head() {
   return asset_head;
+}
+
+bool is_helicopter(r_asset_ptr asset){
+  return (strcmp(asset->kind, "H"));
 }

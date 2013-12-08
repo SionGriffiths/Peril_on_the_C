@@ -36,7 +36,7 @@ time_ptr read_time(FILE * file_in) {
     return NULL;
   } else {
     printf("Time read ok \n");
-    time_t temp = mktime(new_time);    
+    time_t temp = mktime(new_time);
     fprintf(get_log_file(), "Time is %s\n", ctime(&temp));
     return new_time;
   }
@@ -53,24 +53,15 @@ void set_current_time(time_ptr in_time) {
 }
 
 double time_diff(time_ptr old, time_ptr new) {
-  time_t a = mktime(old);
-  time_t b = mktime(new); 
-  return (difftime(a, b))/60;
+  time_t _old = mktime(old);
+  time_t _new = mktime(new);
+  return (difftime(_old, _new)) / 60;
 }
 
-
-
-
-
-
 void show_time(time_ptr time_to_show) {
-  printf("%d %d %d %d %d %d \n",
-          time_to_show -> tm_year + 1900,
-          time_to_show -> tm_mon,
-          time_to_show -> tm_mday,
-          time_to_show -> tm_hour,
-          time_to_show -> tm_min,
-          time_to_show -> tm_sec);
+
+  time_t show = mktime(time_to_show);
+  printf("%s", ctime(&show));
 }
 
 

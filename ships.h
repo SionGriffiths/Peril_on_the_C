@@ -5,6 +5,7 @@
  * Created on 02 December 2013, 11:28
  */
 #include "navigation.h"
+#include <stdio.h>
 
 #ifndef SHIPS_H
 #define	SHIPS_H

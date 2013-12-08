@@ -5,6 +5,7 @@
  * Created on 01 December 2013, 17:58
  */
 #include "navigation.h"
+#include <stdbool.h>
 
 #ifndef RESCUE_ASSETS_H
 #define	RESCUE_ASSETS_H
@@ -12,8 +13,6 @@
 typedef struct r_asset {
   
   char callsign[50];
-  //YOU'D THINK THIS WOULDN'T NEED TO BE AN ARRAY OF CHAR TO HOLD 1 FUCKING LETTER.
-  //YOU'D BE WRONG. 
   char kind[2];
   char base[30];
   //location struct from navigation.h - holds 2 doubles representing lat/long.
@@ -34,5 +33,5 @@ void add_asset(r_asset_ptr);
 r_asset_ptr get_r_asset_head();
 int make_asset_list(char * resource_file_name);
 r_asset_ptr read_asset(FILE * resources_file);
-
+bool is_helicopter(r_asset_ptr asset);
 #endif /*RESCUE_ASSETS_H */
