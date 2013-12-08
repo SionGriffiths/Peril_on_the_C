@@ -13,28 +13,38 @@
 #include "mayday.h"
 #include <time.h>
 #include "update_positions.h"
+#include "log_file_handler.h"
 
 /*
  * 
  */
 int main(int argc, char** argv) {
-
+  start_logging();
 
   printf("\n\n\t\t\tPERIL ON THE C!\n\n ");
-  printf("Please enter the name of a rescue assets file : ");
+
   char ra_filename[30];
-  scanf("%s", ra_filename);
-  make_asset_list(ra_filename);
 
-  printf("Please enter the name of a ships file : ");
+
+  do {
+    printf("Please enter the name of a rescue assets file : ");
+
+    scanf("%s", ra_filename);
+  } while (make_asset_list(ra_filename) == 0);
+
+
   char ships_filename[30];
-  scanf("%s", ships_filename);
-  make_ship_list(ships_filename);
 
+  do {
+    printf("Please enter the name of a ships file : ");
+    scanf("%s", ships_filename);
+  } while (make_ship_list(ships_filename) == 0);
+  
   time_ptr start_time = get_current_time();
 
-  printf("Please enter the name of a mayday file : ");
   char mayday_filename[30];
+
+  printf("Please enter the name of a mayday file : ");
   scanf("%s", mayday_filename);
   mayday_ptr mayday1 = read_mayday(mayday_filename);
   time_ptr mayday1_time = get_mayday_time(mayday1);
@@ -56,6 +66,8 @@ int main(int argc, char** argv) {
 
 
 
+
+  end_logging();
   return (EXIT_SUCCESS);
 }
 

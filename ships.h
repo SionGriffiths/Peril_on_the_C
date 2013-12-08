@@ -21,7 +21,7 @@ typedef ship * ship_ptr;
 
 ship_ptr read_ship(FILE* ships_file);
 
-void make_ship_list(char * ship_file_name);
+int make_ship_list(char * ship_file_name);
 
 void add_ship(ship_ptr to_add);
 

@@ -35,7 +35,8 @@ double update_long(ship_ptr ship_in, double minutes) {
 
   double new_long = old_long + (speed * sin(course) * minutes / cos(lat_rad)) / 3600;
 
-
+  printf("Speed : %lf \n", ship_in-> speed);
+  printf("Ship is %s \n", ship_in -> ais_id);
   return new_long;
 }
 

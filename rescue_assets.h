@@ -32,7 +32,7 @@ typedef rescue_asset * r_asset_ptr;
 
 void add_asset(r_asset_ptr);
 r_asset_ptr get_r_asset_head();
-void make_asset_list(char * resource_file_name);
+int make_asset_list(char * resource_file_name);
 r_asset_ptr read_asset(FILE * resources_file);
 
 #endif /*RESCUE_ASSETS_H */

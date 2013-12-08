@@ -4,6 +4,7 @@
 #include "navigation.h"
 #include "mytime.h"
 #include <time.h>
+#include "log_file_handler.h"
 
 
 static time_ptr current_time = NULL;
@@ -35,6 +36,8 @@ time_ptr read_time(FILE * file_in) {
     return NULL;
   } else {
     printf("Time read ok \n");
+    time_t temp = mktime(new_time);    
+    fprintf(get_log_file(), "Time is %s\n", ctime(&temp));
     return new_time;
   }
 
@@ -54,6 +57,11 @@ double time_diff(time_ptr old, time_ptr new) {
   time_t b = mktime(new); 
   return (difftime(a, b))/60;
 }
+
+
+
+
+
 
 void show_time(time_ptr time_to_show) {
   printf("%d %d %d %d %d %d \n",

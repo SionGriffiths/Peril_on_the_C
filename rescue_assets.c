@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "rescue_assets.h"
 #include "navigation.h"
+#include "log_file_handler.h"
 
 static r_asset_ptr asset_head = NULL;
 
@@ -36,7 +37,7 @@ r_asset_ptr read_asset(FILE * resources_file) {
   }
 }
 
-void make_asset_list(char * resource_file_name) {
+int make_asset_list(char * resource_file_name) {
 
   FILE * resource_file;
 
@@ -55,13 +56,15 @@ void make_asset_list(char * resource_file_name) {
       count++;
     }
     printf("Read in %d assets OK \n", count);
+    fprintf(get_log_file(), "%d Rescue assets currently on call...\n", count);
     fclose(resource_file);
 
   } else {
     printf("Could not find file \n");
+    return 0;
   }
  
-  
+  return 1;
 }
 
 void add_asset(r_asset_ptr to_add) {
