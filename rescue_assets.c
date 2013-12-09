@@ -97,5 +97,5 @@ r_asset_ptr get_r_asset_head() {
 }
 
 bool is_helicopter(r_asset_ptr asset){
-  return (strcmp(asset->kind, "H"));
+   return(strcmp(asset->kind, "H") ==0 );
 }

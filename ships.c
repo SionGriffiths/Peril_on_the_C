@@ -41,7 +41,7 @@ int make_ship_list(char * ship_file_name) {
 
   ship_ptr head;
   ship_ptr in_ship;
-  time_ptr in_time;
+  time_t in_time;
 
   ships_file = fopen(ship_file_name, "r");
 

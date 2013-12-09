@@ -7,61 +7,57 @@
 #include "log_file_handler.h"
 
 
-static time_ptr current_time = NULL;
+static time_t current_time;
 
-time_ptr read_time(FILE * file_in) {
+time_t read_time(FILE * file_in) {
 
   int read_status;
 
-  timestr* new_time;
+  struct tm new_time;
 
-  new_time = calloc(1, sizeof (timestr));
+  //new_time = calloc(1, sizeof (new_time));
 
   //temp varibales here for conversion from file date format to date accepted by time.h
   int temp_month = 0;
   int temp_year = 0;
 
   read_status = fscanf(file_in, "%d %d %d %d %d %d",
-          &new_time -> tm_mday,
+          &new_time.tm_mday,
           &temp_month,
           &temp_year,
-          &new_time -> tm_hour,
-          &new_time -> tm_min,
-          &new_time -> tm_sec);
+          &new_time.tm_hour,
+          &new_time.tm_min,
+          &new_time.tm_sec);
 
-  new_time -> tm_year = (temp_year - 1900);
-  new_time -> tm_mon = (temp_month - 1);
-
+  new_time.tm_year = (temp_year - 1900);
+  new_time.tm_mon = (temp_month - 1);
+  new_time.tm_isdst = 0;
+  time_t ret_value;
   if (read_status == EOF) {
-    return NULL;
+    return ret_value;
   } else {
     printf("Time read ok \n");
-    time_t temp = mktime(new_time);
-    fprintf(get_log_file(), "Time is %s\n", ctime(&temp));
-    return new_time;
+    ret_value = mktime(&new_time);
+    fprintf(get_log_file(), "Time is %s\n", ctime(&ret_value));
+    return ret_value;
   }
 
 
 }
 
-time_ptr get_current_time() {
+time_t get_current_time() {
   return current_time;
 }
 
-void set_current_time(time_ptr in_time) {
+void set_current_time(time_t in_time) {
   current_time = in_time;
 }
 
-double time_diff(time_ptr old, time_ptr new) {
-  time_t _old = mktime(old);
-  time_t _new = mktime(new);
-  return (difftime(_old, _new)) / 60;
+double time_diff(time_t past, time_t now) {
+  
+  return (difftime(past, now)) / 60;
 }
 
-void show_time(time_ptr time_to_show) {
 
-  time_t show = mktime(time_to_show);
-  printf("%s", ctime(&show));
-}
 
 

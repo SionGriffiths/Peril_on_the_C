@@ -38,20 +38,20 @@ int main(int argc, char** argv) {
     scanf("%s", ships_filename);
   } while (make_ship_list(ships_filename) == 0);
 
-  time_ptr start_time = get_current_time();
+  time_t start_time = get_current_time();
 
   char mayday_filename[30];
 
   printf("Please enter the name of a mayday file : ");
   scanf("%s", mayday_filename);
   mayday_ptr mayday1 = read_mayday(mayday_filename);
-  time_ptr mayday1_time = &mayday1 -> m_time;
-  time_t m_time = mktime(mayday1_time);
+  
+  time_t m_time = mayday1 -> m_time;
   fprintf(get_log_file(), "Mayday received at %s \n", ctime(&m_time));
-  show_time(mayday1_time);
+  printf("Mayday received at %s \n", ctime(&m_time));
 
   double timediff;
-  timediff = time_diff(mayday1_time, start_time);
+  timediff = time_diff(m_time, start_time);
 
 
 

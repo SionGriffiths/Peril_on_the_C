@@ -12,7 +12,7 @@
 
 typedef struct mday{
  
-  timestr m_time;
+  time_t m_time;
   char ais_id[30];
   int boat_minutes;
   int heli_minutes;
@@ -21,7 +21,7 @@ typedef struct mday{
 typedef mayday * mayday_ptr;
 
 mayday_ptr read_mayday(char * mayday_file_name);
-time_ptr get_mayday_time(mayday_ptr mayday_in);
+time_t get_mayday_time(mayday_ptr mayday_in);
 
 #endif	/* MAYDAY_H */
 

@@ -16,6 +16,7 @@ mayday_ptr read_mayday(char * mayday_file_name) {
   FILE * mayday_file;
   int read_status;
   mayday * mayday_in;
+  struct tm temp_time;
 
   mayday_file = fopen(mayday_file_name, "r");
 
@@ -27,18 +28,20 @@ mayday_ptr read_mayday(char * mayday_file_name) {
     int temp_month = 0;
     int temp_year = 0;
     read_status = fscanf(mayday_file, "%d%d%d%d%d%d%s%d%d",
-            &mayday_in->m_time.tm_mday,
+            &temp_time.tm_mday,
             &temp_month,
             &temp_year,
-            &mayday_in->m_time.tm_hour,
-            &mayday_in->m_time.tm_min,
-            &mayday_in->m_time.tm_sec,
+            &temp_time.tm_hour,
+            &temp_time.tm_min,
+            &temp_time.tm_sec,
             mayday_in->ais_id,
             &mayday_in->boat_minutes,
             &mayday_in->heli_minutes);
 
-    mayday_in->m_time.tm_mon = temp_month - 1;
-    mayday_in->m_time.tm_year = temp_year - 1900;
+    temp_time.tm_mon = temp_month - 1;
+    temp_time.tm_year = temp_year - 1900;
+    temp_time.tm_isdst = 0;
+    mayday_in->m_time = mktime(&temp_time);
 
     if (read_status == EOF) {
       fclose(mayday_file);
@@ -55,9 +58,9 @@ mayday_ptr read_mayday(char * mayday_file_name) {
   return NULL;
 }
 
-time_ptr get_mayday_time(mayday_ptr mayday_in) {
+time_t get_mayday_time(mayday_ptr mayday_in) {
 
-  time_ptr mayday_time = &mayday_in->m_time;
+  time_t mayday_time = mayday_in->m_time;
   
   return mayday_time;
 }
