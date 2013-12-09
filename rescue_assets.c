@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "linked_list.h"
 #include "rescue_assets.h"
-//#include "navigation.h"
-//#include <stdbool.h>
+#include "linked_list.h"
 #include "log_file_handler.h"
 #include <string.h>
 
-static r_asset_ptr asset_head = NULL;
+
+
+static list_ptr asset_list;
 
 r_asset_ptr read_asset(FILE * resources_file) {
 
@@ -18,7 +20,7 @@ r_asset_ptr read_asset(FILE * resources_file) {
 
 
   //name, type, base, lat, long, speed, range, turn around time
-  //%1s used for kind because C is a fucking wanker.
+
   read_status = fscanf(resources_file, "%s%1s%s%lf%lf%f%d%d",
           in_asset -> callsign,
           in_asset -> kind,
@@ -31,10 +33,10 @@ r_asset_ptr read_asset(FILE * resources_file) {
 
   if (read_status == EOF) {
     return NULL;
-  } else if(read_status != 8){
+  } else if (read_status != 8) {
     printf("Rescue asset data looks incorrect or corrupt \n");
     return NULL;
-  }else {
+  } else {
     return in_asset;
   }
 }
@@ -43,18 +45,22 @@ int make_asset_list(char * resource_file_name) {
 
   FILE * resource_file;
 
-  r_asset_ptr head;
+
   r_asset_ptr asset_in;
+  init_list(&asset_list);
 
   resource_file = fopen(resource_file_name, "r");
 
   if (resource_file != NULL) {
 
-    head = read_asset(resource_file);
-    add_asset(head);
-    int count = 1;
+
+    int count = 0;
     while ((asset_in = read_asset(resource_file)) != NULL) {
-      add_asset(asset_in);
+      node_ptr link_asset;
+      link_asset = calloc(1, sizeof (node));
+      link_asset->next = NULL;
+      link_asset->node_data = asset_in;
+      add_to_list(&link_asset, &asset_list);
       count++;
     }
     printf("Read in %d assets OK \n", count);
@@ -65,10 +71,11 @@ int make_asset_list(char * resource_file_name) {
     printf("Could not find file \n");
     return 0;
   }
- 
+
   return 1;
 }
 
+/*
 void add_asset(r_asset_ptr to_add) {
 
   r_asset_ptr iterate = asset_head;
@@ -90,12 +97,12 @@ void add_asset(r_asset_ptr to_add) {
     }
   }
 
+}*/
+
+list_ptr get_asset_list() {
+  return asset_list;
 }
 
-r_asset_ptr get_r_asset_head() {
-  return asset_head;
-}
-
-bool is_helicopter(r_asset_ptr asset){
-   return(strcmp(asset->kind, "H") ==0 );
+bool is_helicopter(r_asset_ptr asset) {
+  return (strcmp(asset->kind, "H") == 0);
 }

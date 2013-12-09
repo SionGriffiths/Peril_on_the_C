@@ -19,11 +19,14 @@ extern "C" {
   
   typedef struct node_list{
     node* head;
+    node* tail;
   }linked_list;
   
+  typedef node * node_ptr;
   typedef linked_list * list_ptr;
 
-  void add_to_list(void* to_add, list_ptr list );
+  void add_to_list(node_ptr * to_add, list_ptr * list);
+  void init_list(list_ptr * list);
 
 #ifdef	__cplusplus
 }

@@ -37,22 +37,22 @@ void respond_to_mayday(ship_ptr to_rescue, mayday_ptr mayday_in) {
   double best_heli_time = INT_MAX;
   double heli_return_time = 0;
 
-  r_asset_ptr itar = get_r_asset_head();
+  node_ptr itar = get_asset_list()->head;
 
 
   while (itar != NULL) {
-    double time = get_response_time(to_rescue, itar);
+    double time = get_response_time(to_rescue, itar->node_data);
 
-    if (can_return(time, mayday_in, itar)) {
-      if (is_helicopter(itar)) {
+    if (can_return(time, mayday_in, itar->node_data)) {
+      if (is_helicopter(itar->node_data)) {
         if (time < best_heli_time) {
-          best_heli = itar;
+          best_heli = itar->node_data;
           best_heli_time = time;
           heli_return_time = (time * 2) + mayday_in->heli_minutes;
         }
       } else {
         if (time < best_boat_time) {
-          best_boat = itar;
+          best_boat = itar->node_data;
           best_boat_time = time;
           boat_return_time = (time * 2) + mayday_in->boat_minutes;
         }

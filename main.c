@@ -15,6 +15,7 @@
 #include "update_positions.h"
 #include "log_file_handler.h"
 #include "rescue_handler.h"
+#include "linked_list.h"
 
 int main(int argc, char** argv) {
   start_logging();

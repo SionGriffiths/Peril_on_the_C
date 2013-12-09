@@ -6,6 +6,7 @@
  */
 #include "navigation.h"
 #include <stdbool.h>
+#include "linked_list.h"
 
 #ifndef RESCUE_ASSETS_H
 #define	RESCUE_ASSETS_H
@@ -29,8 +30,9 @@ typedef rescue_asset * r_asset_ptr;
 
 
 
+
 void add_asset(r_asset_ptr);
-r_asset_ptr get_r_asset_head();
+list_ptr get_asset_list();
 int make_asset_list(char * resource_file_name);
 r_asset_ptr read_asset(FILE * resources_file);
 bool is_helicopter(r_asset_ptr asset);

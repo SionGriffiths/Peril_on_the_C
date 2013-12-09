@@ -5,9 +5,11 @@
 #include "mytime.h"
 #include <string.h>
 #include "log_file_handler.h"
+#include "linked_list.h"
 
 
-static ship_ptr ship_head = NULL;
+//static ship_ptr ship_head = NULL;
+static list_ptr ship_list;
 
 ship_ptr read_ship(FILE* ships_file) {
 
@@ -38,8 +40,9 @@ int make_ship_list(char * ship_file_name) {
 
   FILE * ships_file;
 
-
-  ship_ptr head;
+  init_list(&ship_list);
+  
+  
   ship_ptr in_ship;
   time_t in_time;
 
@@ -49,12 +52,14 @@ int make_ship_list(char * ship_file_name) {
 
     in_time = read_time(ships_file);
     set_current_time(in_time);
-    head = read_ship(ships_file);
-    add_ship(head);
-
-    int count = 1;
+    
+    int count = 0;
     while ((in_ship = read_ship(ships_file)) != NULL) {
-      add_ship(in_ship);
+      node_ptr link_ship;
+      link_ship = calloc(1, sizeof (node));
+      link_ship->next = NULL;
+      link_ship->node_data = in_ship;
+      add_to_list(&link_ship, &ship_list);
       count++;
     }
     printf("Read in %d ships OK \n", count);
@@ -68,7 +73,7 @@ int make_ship_list(char * ship_file_name) {
   return 1;
 }
 
-void add_ship(ship_ptr to_add) {
+/*void add_ship(ship_ptr to_add) {
 
   ship_ptr iterate = ship_head;
 
@@ -88,19 +93,21 @@ void add_ship(ship_ptr to_add) {
       iterate = iterate -> next;
     }
   }
-}
+}*/
 
-ship_ptr get_ship_head() {
-  return ship_head;
+list_ptr get_ship_list() {
+  return ship_list;
 }
 
 ship_ptr find_ship_by_id(char * id) {
-
-  ship_ptr itar = get_ship_head();
+  printf("Looking for : %s \n", id);
+  node_ptr itar = ship_list->head;
 
   while (itar != NULL) {
-    if (strcmp(itar->ais_id, id) == 0) {
-      return itar;
+    ship_ptr find_ship = (ship_ptr) itar ->node_data;
+    printf("Peeking at %s \n", find_ship->ais_id);
+    if (strcmp(find_ship->ais_id, id) == 0) {
+      return find_ship;
     }
     itar = itar -> next;
   }
