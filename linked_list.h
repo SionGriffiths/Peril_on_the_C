@@ -26,6 +26,7 @@ extern "C" {
   typedef linked_list * list_ptr;
 
   void add_to_list(node_ptr * to_add, list_ptr * list);
+  void init_node(node_ptr * new_node ,void* in_data);
   void init_list(list_ptr * list);
 
 #ifdef	__cplusplus

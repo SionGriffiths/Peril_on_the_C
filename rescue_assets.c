@@ -16,7 +16,7 @@ r_asset_ptr read_asset(FILE * resources_file) {
   rescue_asset * in_asset;
 
   //Dynamic allocation of memory for a rescue asset
-  in_asset = calloc(1, sizeof (rescue_asset));
+  in_asset = calloc(1, sizeof (struct r_asset));
 
 
   //name, type, base, lat, long, speed, range, turn around time
@@ -57,9 +57,7 @@ int make_asset_list(char * resource_file_name) {
     int count = 0;
     while ((asset_in = read_asset(resource_file)) != NULL) {
       node_ptr link_asset;
-      link_asset = calloc(1, sizeof (node));
-      link_asset->next = NULL;
-      link_asset->node_data = asset_in;
+      init_node(&link_asset, asset_in);
       add_to_list(&link_asset, &asset_list);
       count++;
     }
@@ -75,29 +73,6 @@ int make_asset_list(char * resource_file_name) {
   return 1;
 }
 
-/*
-void add_asset(r_asset_ptr to_add) {
-
-  r_asset_ptr iterate = asset_head;
-
-  if (asset_head == NULL) {
-    asset_head = to_add;
-
-  } else if (asset_head -> next == NULL) {
-    asset_head -> next = to_add;
-
-  } else {
-    while (iterate != NULL) {
-      if (iterate -> next == NULL) {
-        iterate -> next = to_add;
-
-        break;
-      }
-      iterate = iterate -> next;
-    }
-  }
-
-}*/
 
 list_ptr get_asset_list() {
   return asset_list;

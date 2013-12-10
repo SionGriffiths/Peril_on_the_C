@@ -41,8 +41,8 @@ int make_ship_list(char * ship_file_name) {
   FILE * ships_file;
 
   init_list(&ship_list);
-  
-  
+
+
   ship_ptr in_ship;
   time_t in_time;
 
@@ -52,13 +52,11 @@ int make_ship_list(char * ship_file_name) {
 
     in_time = read_time(ships_file);
     set_current_time(in_time);
-    
+
     int count = 0;
     while ((in_ship = read_ship(ships_file)) != NULL) {
       node_ptr link_ship;
-      link_ship = calloc(1, sizeof (node));
-      link_ship->next = NULL;
-      link_ship->node_data = in_ship;
+      init_node(&link_ship, in_ship);
       add_to_list(&link_ship, &ship_list);
       count++;
     }
@@ -73,39 +71,16 @@ int make_ship_list(char * ship_file_name) {
   return 1;
 }
 
-/*void add_ship(ship_ptr to_add) {
-
-  ship_ptr iterate = ship_head;
-
-  if (ship_head == NULL) {
-    ship_head = to_add;
-
-  } else if (ship_head -> next == NULL) {
-    ship_head -> next = to_add;
-
-  } else {
-    while (iterate != NULL) {
-      if (iterate -> next == NULL) {
-        iterate -> next = to_add;
-
-        break;
-      }
-      iterate = iterate -> next;
-    }
-  }
-}*/
-
 list_ptr get_ship_list() {
   return ship_list;
 }
 
 ship_ptr find_ship_by_id(char * id) {
-  printf("Looking for : %s \n", id);
+  
   node_ptr itar = ship_list->head;
 
   while (itar != NULL) {
     ship_ptr find_ship = (ship_ptr) itar ->node_data;
-    printf("Peeking at %s \n", find_ship->ais_id);
     if (strcmp(find_ship->ais_id, id) == 0) {
       return find_ship;
     }
