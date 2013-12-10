@@ -10,6 +10,9 @@
 #include <math.h>
 #include "ships.h"
 #include <stdbool.h>
+#include "log_file_handler.h"
+
+static char msg_buffer[1024];
 
 double deg_to_rad(double angle_in) {
   return (angle_in * M_PI) / 180;
@@ -35,8 +38,7 @@ double update_long(ship_ptr ship_in, double minutes) {
 
   double new_long = old_long + (speed * sin(course) * minutes / cos(lat_rad)) / 3600;
 
-  printf("Speed : %lf \n", ship_in-> speed);
-  printf("Ship is %s \n", ship_in -> ais_id);
+  
   return new_long;
 }
 
@@ -46,7 +48,9 @@ ship_ptr update_ship(ship_ptr ship_in, double minutes) {
 
   ship_in ->loc.lat = temp_lat;
   ship_in ->loc.lng = temp_long;
-
+  sprintf(msg_buffer, "Updating possition of %s \nNew position : lat - %lf long - %lf \n",
+          ship_in->ais_id, ship_in->loc.lat, ship_in->loc.lng);
+  output_event(msg_buffer);
   return ship_in;
 }
 
@@ -54,12 +58,15 @@ bool check_position(ship_ptr to_check) {
   bool in_range = true;
   if ((to_check->loc.lat < 51.667) || (to_check->loc.lat > 52.883)) {
     in_range = false;
-    printf("Ship latitude out of range \n");
+    sprintf(msg_buffer, "%s latitude outside of shipping area.\n", to_check->ais_id);
+    output_event(msg_buffer);
   } else if ((to_check->loc.lng < -6.667) || (to_check->loc.lng > -3.833)) {
     in_range = false;
-    printf("Ship longitude out of range \n");
+    sprintf(msg_buffer, "%s longitude outside of shipping area.\n", to_check->ais_id);
+    output_event(msg_buffer);
   } else {
-    printf("Ship position ok \n");
+    sprintf(msg_buffer, "Ship position within our shipping area \n");
+    output_event(msg_buffer);
   }
   return in_range;
 }

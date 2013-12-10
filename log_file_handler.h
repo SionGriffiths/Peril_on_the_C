@@ -9,7 +9,6 @@
 #define	LOG_FILE_HANDLER_H
 
 void start_logging();
-FILE * get_log_file();
-void end_logging();
+void output_event(char * message);
 #endif	/* LOG_FILE_HANDLER_H */
 

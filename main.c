@@ -19,7 +19,7 @@
 
 int main(int argc, char** argv) {
   start_logging();
-
+  char msg_buffer[1024];
   printf("\n\n\t\t\tPERIL ON THE C!\n\n ");
 
   char ra_filename[30];
@@ -46,33 +46,32 @@ int main(int argc, char** argv) {
   printf("Please enter the name of a mayday file : ");
   scanf("%s", mayday_filename);
   mayday_ptr mayday1 = read_mayday(mayday_filename);
-  
-  time_t m_time = mayday1 -> m_time;
-  fprintf(get_log_file(), "Mayday received at %s \n", ctime(&m_time));
-  printf("Mayday received at %s \n", ctime(&m_time));
 
+  time_t m_time = mayday1 -> m_time;
+  
+  sprintf(msg_buffer, "Mayday received at %s from %s \n", ctime(&m_time), mayday1->ais_id);
+  output_event(msg_buffer);
   double timediff;
   timediff = time_diff(m_time, start_time);
 
 
 
   ship_ptr to_rescue = find_ship_by_id(mayday1->ais_id);
-  
+
 
   if (to_rescue != NULL) {
     update_ship(to_rescue, timediff);
-    fprintf(get_log_file(), "Ship in peril is %s \n", to_rescue->ais_id);
     check_position(to_rescue);
     respond_to_mayday(to_rescue, mayday1);
   } else {
-    printf("Ship untracked, not responding to mayday");
-    fprintf(get_log_file(), "Call from untracked vessel; not responding to mayday \n");
+    sprintf(msg_buffer, "Vessel %s, is untracked on our system : unable to respond \n", to_rescue->ais_id);
+    output_event(msg_buffer);
   }
 
 
 
 
-  end_logging();
+
   return (EXIT_SUCCESS);
 }
 

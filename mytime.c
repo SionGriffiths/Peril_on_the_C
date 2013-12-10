@@ -12,11 +12,10 @@ static time_t current_time;
 time_t read_time(FILE * file_in) {
 
   int read_status;
-
+  char msg_buffer[1024];
   struct tm new_time;
 
-  //new_time = calloc(1, sizeof (new_time));
-
+  
   //temp varibales here for conversion from file date format to date accepted by time.h
   int temp_month = 0;
   int temp_year = 0;
@@ -38,7 +37,9 @@ time_t read_time(FILE * file_in) {
   } else {
     printf("Time read ok \n");
     ret_value = mktime(&new_time);
-    fprintf(get_log_file(), "Time is %s\n", ctime(&ret_value));
+    
+    sprintf(msg_buffer, "Time is %s \n", ctime(&ret_value));
+    output_event(msg_buffer);
     return ret_value;
   }
 

@@ -30,6 +30,7 @@ bool can_return(double time, mayday_ptr md_ship, r_asset_ptr asset) {
 
 void respond_to_mayday(ship_ptr to_rescue, mayday_ptr mayday_in) {
 
+  char msg_buffer[1024];
   r_asset_ptr best_boat;
   double best_boat_time = INT_MAX;
   double boat_return_time = 0;
@@ -70,21 +71,23 @@ void respond_to_mayday(ship_ptr to_rescue, mayday_ptr mayday_in) {
     printf("No helicopters able to respond \n");
   }
 
-  printf("Assets responding to mayday %s and %s \n", best_heli->callsign, best_boat->callsign);
-  fprintf(get_log_file(), "Assets responding to mayday %s and %s \n", best_heli->callsign, best_boat->callsign);
+
+  sprintf(msg_buffer, "Assets responding to mayday %s and %s \n", best_heli->callsign, best_boat->callsign);
+  output_event(msg_buffer);
 
   time_t heli_time = mayday_in->m_time + (best_heli_time * 60);
   time_t boat_time = mayday_in->m_time + (best_boat_time * 60);
 
-  fprintf(get_log_file(), "%s due on scene at %s \n", best_heli->callsign, ctime(&heli_time));
-  fprintf(get_log_file(), "%s due on scene at %s \n", best_boat->callsign, ctime(&boat_time));
+  sprintf(msg_buffer, "Helicopter %s due on scene at %s \nLifeboat %s due on scene at %s \n",
+          best_heli->callsign, ctime(&heli_time), best_boat->callsign, ctime(&boat_time));
+  output_event(msg_buffer);
 
   heli_time = mayday_in->m_time + ((heli_return_time + best_heli->turn_around_time)*60);
   boat_time = mayday_in->m_time + ((boat_return_time + best_boat->turn_around_time)*60);
 
-  fprintf(get_log_file(), "%s ready for redeployment at %s \n", best_heli->callsign, ctime(&heli_time));
-  fprintf(get_log_file(), "%s ready for redeployment at %s \n", best_boat->callsign, ctime(&boat_time));
-
+  sprintf(msg_buffer, "%s ready for redeployment at %s \n%s ready for redeployment at %s \n",
+          best_heli->callsign, ctime(&heli_time), best_boat->callsign, ctime(&boat_time));
+  output_event(msg_buffer);
 
 }
 

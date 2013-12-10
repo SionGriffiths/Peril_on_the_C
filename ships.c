@@ -39,7 +39,7 @@ ship_ptr read_ship(FILE* ships_file) {
 int make_ship_list(char * ship_file_name) {
 
   FILE * ships_file;
-
+  char msg_buffer[1024];
   init_list(&ship_list);
 
 
@@ -61,7 +61,8 @@ int make_ship_list(char * ship_file_name) {
       count++;
     }
     printf("Read in %d ships OK \n", count);
-    fprintf(get_log_file(), "Tracking %d ships..\n", count);
+    sprintf(msg_buffer, "Tracking %d ships..\n", count);
+    output_event(msg_buffer);
     fclose(ships_file);
 
   } else {

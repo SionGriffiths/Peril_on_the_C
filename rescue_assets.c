@@ -44,7 +44,7 @@ r_asset_ptr read_asset(FILE * resources_file) {
 int make_asset_list(char * resource_file_name) {
 
   FILE * resource_file;
-
+  char msg_buffer[1024];
 
   r_asset_ptr asset_in;
   init_list(&asset_list);
@@ -62,7 +62,9 @@ int make_asset_list(char * resource_file_name) {
       count++;
     }
     printf("Read in %d assets OK \n", count);
-    fprintf(get_log_file(), "%d Rescue assets currently on call...\n", count);
+    
+    sprintf(msg_buffer, "%d Rescue assets currently on call...\n", count);
+    output_event(msg_buffer);
     fclose(resource_file);
 
   } else {
