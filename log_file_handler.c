@@ -1,11 +1,23 @@
-//fprintf to append
+/* 
+ * File:   log_file_handler.c
+ * Author: sig2
+ * 
+ * Description: Specifies functionality related to logging events during the 
+ * course of program execution.
+ * 
+ * Created December 2013
+ */
 
 
 #include <stdio.h>
 #include <stdlib.h>
 
-static FILE * log_file;
+/*log_file needs file wide scope - 
+ * static to prevent global access*/
+static FILE * log_file; 
 
+/*Initial logging function called at start of program execution.
+ Provides the means to easily distinguish program runs in the log file*/
 void start_logging(){
   log_file = fopen("log_Main.txt", "a");
   
@@ -20,6 +32,7 @@ void start_logging(){
   fclose(log_file);
 }
 
+/*Prints the parameter message to file and stdout*/
 void output_event(char * message){
   
   log_file = fopen("log_Main.txt", "a");
@@ -36,12 +49,3 @@ void output_event(char * message){
   fclose(log_file);
   
 }
-/*
-FILE * get_log_file(){
-  return log_file;
-}
-
-void end_logging(){
-  fclose(log_file);
-}
-  */

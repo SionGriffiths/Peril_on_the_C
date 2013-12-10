@@ -1,8 +1,12 @@
 /* 
- * File:   resource.h
+ * File:   rescue_assets.h
  * Author: sig2
- *
- * Created on 01 December 2013, 17:58
+ * 
+ * Description : Defines a rescue asset structure, specifies functions to read
+ * data from file and populate the structure, return a list of assets and 
+ * whether a resrouce is a helicopter. 
+ *               
+ * Created December 2013
  */
 #include "navigation.h"
 #include <stdbool.h>
@@ -21,19 +25,14 @@ typedef struct r_asset {
   float speed;
   int max_deploy_time;
   int turn_around_time;
-  struct r_asset * next;
-
+  
 } rescue_asset;
 
 typedef rescue_asset * r_asset_ptr;
 
-
-
-
-
-void add_asset(r_asset_ptr);
 list_ptr get_asset_list();
 int make_asset_list(char * resource_file_name);
 r_asset_ptr read_asset(FILE * resources_file);
 bool is_helicopter(r_asset_ptr asset);
+
 #endif /*RESCUE_ASSETS_H */

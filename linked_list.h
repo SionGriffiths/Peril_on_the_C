@@ -1,8 +1,13 @@
 /* 
  * File:   linked_list.h
  * Author: sig2
- *
- * Created on 09 December 2013, 15:15
+ * 
+ * Description : Defines the structure of a linked list and linked list
+ *  nodes which accept generic pointers to data.
+ * Specifies functions for initialising nodes, linked lists and adding
+ * nodes to lists.
+ *               
+ * Created December 2013
  */
 
 #ifndef LINKED_LIST_H
@@ -12,21 +17,27 @@
 extern "C" {
 #endif
 
- typedef struct link_node{
+  typedef struct link_node {
     void* node_data;
-    struct link_node * next;
-  }node;
+    struct link_node * next; 
+  } node;
+
   
-  typedef struct node_list{
+  typedef struct node_list {
     node* head;
     node* tail;
-  }linked_list;
-  
+  } linked_list;
+
   typedef node * node_ptr;
   typedef linked_list * list_ptr;
 
+  /*Function prototype for function that adds nodes to a list*/
   void add_to_list(node_ptr * to_add, list_ptr * list);
-  void init_node(node_ptr * new_node ,void* in_data);
+  
+  /*Function prototype for function that initialises a list node*/
+  void init_node(node_ptr * new_node, void* in_data);
+  
+  /*Function prototype for function that initialises a linked list*/
   void init_list(list_ptr * list);
 
 #ifdef	__cplusplus
