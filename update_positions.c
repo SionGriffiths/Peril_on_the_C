@@ -58,11 +58,11 @@ bool check_position(ship_ptr to_check) {
   bool in_range = true;
   if ((to_check->loc.lat < 51.667) || (to_check->loc.lat > 52.883)) {
     in_range = false;
-    sprintf(msg_buffer, "%s latitude outside of shipping area.\n", to_check->ais_id);
+    sprintf(msg_buffer, "%s latitude outside of shipping area.\nNot responding to mayday\n", to_check->ais_id);
     output_event(msg_buffer);
   } else if ((to_check->loc.lng < -6.667) || (to_check->loc.lng > -3.833)) {
     in_range = false;
-    sprintf(msg_buffer, "%s longitude outside of shipping area.\n", to_check->ais_id);
+    sprintf(msg_buffer, "%s longitude outside of shipping area.\nNot responding to mayday\n", to_check->ais_id);
     output_event(msg_buffer);
   } else {
     sprintf(msg_buffer, "Ship position within our shipping area \n");

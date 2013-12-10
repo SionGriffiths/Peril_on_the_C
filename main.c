@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
     printf("Please enter the name of a rescue assets file : ");
 
     scanf("%s", ra_filename);
-  } while (make_asset_list(ra_filename) == 1);
+  } while (make_asset_list(ra_filename) == 0);
 
 
   char ships_filename[30];
@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
   do {
     printf("Please enter the name of a ships file : ");
     scanf("%s", ships_filename);
-  } while (make_ship_list(ships_filename) == 1);
+  } while (make_ship_list(ships_filename) == 0);
 
   time_t start_time = get_current_time();
 
@@ -61,8 +61,9 @@ int main(int argc, char** argv) {
 
   if (to_rescue != NULL) {
     update_ship(to_rescue, timediff);
-    check_position(to_rescue);
-    respond_to_mayday(to_rescue, mayday1);
+    if (check_position(to_rescue)) {
+      respond_to_mayday(to_rescue, mayday1);
+    }
   } else {
     sprintf(msg_buffer, "Vessel %s, is untracked on our system : unable to respond \n", mayday1->ais_id);
     output_event(msg_buffer);

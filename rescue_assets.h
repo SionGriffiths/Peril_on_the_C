@@ -30,9 +30,16 @@ typedef struct r_asset {
 
 typedef rescue_asset * r_asset_ptr;
 
+/*Function prototype for the function that returns the list of assets*/
 list_ptr get_asset_list();
+
+/* Function prototype for the function that populates a list of assets from file*/
 int make_asset_list(char * resource_file_name);
+
+/*Function prototype for the function that creates assets stucts from file*/
 r_asset_ptr read_asset(FILE * resources_file);
+
+/*Function prototype for the function that returns whether an asset is a helicopter*/
 bool is_helicopter(r_asset_ptr asset);
 
 #endif /*RESCUE_ASSETS_H */

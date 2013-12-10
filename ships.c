@@ -60,6 +60,7 @@ int make_ship_list(char * ship_file_name) {
       add_to_list(&link_ship, &ship_list);
       count++;
     }
+    
     printf("Read in %d ships OK \n", count);
     sprintf(msg_buffer, "Tracking %d ships..\n", count);
     output_event(msg_buffer);
